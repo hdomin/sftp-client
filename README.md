@@ -13,3 +13,6 @@ Parte de la funcionalidad es enviar por parámetro si solamente se conectará a 
 
 Un plug-in adicional es que si falla en alguna conexión, se envíe un email a la cuenta registrada, para esto debería de poder configurarse los parámetros de un servidor SMTP
 
+
+## Editado desde el ambiente de desarrollo ##
+.
