@@ -15,4 +15,4 @@ Un plug-in adicional es que si falla en alguna conexión, se envíe un email a l
 
 
 ## Editado desde el ambiente de desarrollo ##
-|Cuadro|A|B|
+|Cuadro|A|B|..
