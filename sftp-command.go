@@ -1,11 +1,15 @@
 package main
 
 import (
-	"fmt"
 	"os"
+	"strings"
 )
 
 func main() {
+
+	if strings.EqualFold(os.Args[1], "add") {
+		addServer(os.Args)
+	}
 
 	/*
 		sshConfig := &ssh.ClientConfig{
@@ -44,6 +48,5 @@ func main() {
 		srcFile.Close()
 		dstFile.Close()
 	*/
-	fmt.Println(os.Args)
-	writeXML()
+
 }

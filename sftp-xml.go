@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"io"
 	"os"
+	"strings"
 )
 
 type Servidor struct {
@@ -28,6 +29,32 @@ func (s *ServidorArray) AddServidor(pserver string, puser string, ppass string, 
 	fmt.Println(pserver)
 	srv := Servidor{Server: pserver, User: puser, Pass: ppass, SrcFile: psrcFile, DstPath: pdstPath}
 	s.Servidores = append(s.Servidores, srv)
+}
+
+func addServer(params []string) {
+	srv := Servidor{}
+	length := len(params)
+
+	for index, param := range params {
+		param = strings.ToLower(param)
+		//fmt.Println(param)
+		if length > index+1 {
+			switch param {
+			case "--server":
+				srv.Server = params[index+1]
+			case "--user":
+				srv.User = params[index+1]
+			case "--pass":
+				srv.User = params[index+1]
+			case "--srcfile":
+				srv.SrcFile = params[index+1]
+			case "--dstpath":
+				srv.DstPath = params[index+1]
+			}
+		}
+	}
+
+	fmt.Println(srv.DstPath)
 }
 
 func writeXML() {
