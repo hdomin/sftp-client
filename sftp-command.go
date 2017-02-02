@@ -45,4 +45,5 @@ func main() {
 		dstFile.Close()
 	*/
 	fmt.Println(os.Args)
+	writeXML()
 }
