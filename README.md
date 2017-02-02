@@ -14,5 +14,12 @@ Parte de la funcionalidad es enviar por parámetro si solamente se conectará a 
 Un plug-in adicional es que si falla en alguna conexión, se envíe un email a la cuenta registrada, para esto debería de poder configurarse los parámetros de un servidor SMTP
 
 
-## Editado desde el ambiente de desarrollo ##
-|Cuadro|A|B
+## Comandos ##
+### add ###
+    Add one server sftp configuration to download file.  This configuration is saved in a sftp-cliente.xml file configuration
+    --server  IP:PORT
+    --user    user
+    --pass    password
+    --srcFile source file to download
+    --dstPath path to download file
+    --replace id to replace configuration
