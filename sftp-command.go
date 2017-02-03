@@ -7,8 +7,10 @@ import (
 
 func main() {
 
-	if strings.EqualFold(os.Args[1], "add") {
-		addServer(os.Args)
+	if len(os.Args) > 1 {
+		if strings.EqualFold(os.Args[1], "add") {
+			addServer(os.Args)
+		}
 	}
 
 	/*

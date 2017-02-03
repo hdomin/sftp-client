@@ -37,7 +37,7 @@ func addServer(params []string) {
 
 	for index, param := range params {
 		param = strings.ToLower(param)
-		//fmt.Println(param)
+
 		if length > index+1 {
 			switch param {
 			case "--server":
