@@ -22,4 +22,15 @@ Un plug-in adicional es que si falla en alguna conexión, se envíe un email a l
     --pass    password
     --srcFile source file to download
     --dstPath path to download file
-    --replace id to replace configuration
+
+    Example:
+
+        sftp-client add --user usuario --pass clave --srcFile libros.xlsx --dstpath destino.xlsx --server 6:puerto
+
+### list ###
+    List the servers sftp configurated
+
+### delete ###
+    Delete a server sftp configuration
+    --all
+    --server <number>

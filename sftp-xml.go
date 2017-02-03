@@ -4,9 +4,13 @@ import (
 	"encoding/xml"
 	"fmt"
 	"io"
+	"io/ioutil"
 	"os"
+	"strconv"
 	"strings"
 )
+
+const ConfigurationFileName string = "sftp-client.xml"
 
 type Servidor struct {
 	Server  string `xml:"server"`
@@ -17,22 +21,19 @@ type Servidor struct {
 }
 
 type Configuracion struct {
-	XMLName    xml.Name `xml:"configuracion"`
-	Servidores ServidorArray
+	XMLName    xml.Name   `xml:"Configuracion"`
+	Servidores []Servidor `xml:"Servidor"`
 }
 
-type ServidorArray struct {
-	Servidores []Servidor
+func (s *Configuracion) AddServidor(srv *Servidor) {
+	s.Servidores = append(s.Servidores, *srv)
 }
 
-func (s *ServidorArray) AddServidor(pserver string, puser string, ppass string, psrcFile string, pdstPath string) {
-	fmt.Println(pserver)
-	srv := Servidor{Server: pserver, User: puser, Pass: ppass, SrcFile: psrcFile, DstPath: pdstPath}
-	s.Servidores = append(s.Servidores, srv)
+func (srv *Servidor) String() string {
+	return fmt.Sprintf("Servidor: %s   \t- Usuario: %s   \t- Origen: %s   \t- Destino: %s", srv.Server, srv.User, srv.SrcFile, srv.DstPath)
 }
 
-func addServer(params []string) {
-	srv := Servidor{}
+func (srv *Servidor) setParams(params []string) {
 	length := len(params)
 
 	for index, param := range params {
@@ -45,7 +46,7 @@ func addServer(params []string) {
 			case "--user":
 				srv.User = params[index+1]
 			case "--pass":
-				srv.User = params[index+1]
+				srv.Pass = params[index+1]
 			case "--srcfile":
 				srv.SrcFile = params[index+1]
 			case "--dstpath":
@@ -53,36 +54,102 @@ func addServer(params []string) {
 			}
 		}
 	}
-
-	fmt.Println(srv.DstPath)
 }
 
-func writeXML() {
+func addServer(params []string) string {
+	srv := Servidor{}
+	srv.setParams(params)
+
 	v := Configuracion{}
-	v.Servidores.AddServidor("servidor1:22", "user1", "pass1", "file-origen1", "file-destino1")
-	v.Servidores.AddServidor("servidor2:22", "user2", "pass2", "file-origen2", "file-destino2")
-	v.Servidores.AddServidor("servidor3:22", "user3", "pass3", "file-origen3", "file-destino3")
+	//Lee el archivo de configuración
+	openXML(&v)
 
-	xmlString, err := xml.MarshalIndent(v, "", "    ")
+	//Agrega el nuevo servidor
+	v.AddServidor(&srv)
 
-	if err != nil {
-		fmt.Println(err)
+	writeXML(&v)
+
+	return "...............added. " + srv.Server
+}
+
+func deleteServer(params []string) string {
+	ret := "debe de ingresar el número de configuración, utilice  'list'"
+
+	if len(params) > 2 {
+		if indice, err := strconv.Atoi(params[2]); err == nil {
+
+			v := Configuracion{}
+			//Lee el archivo de configuración
+			openXML(&v)
+
+			if len(v.Servidores) > indice {
+				v.Servidores = append(v.Servidores[:indice], v.Servidores[indice+1:]...)
+				writeXML(&v)
+				ret = fmt.Sprintf("..........Configuración [%d] eliminada", indice)
+			} else {
+				ret = "indice fuera de rango, utilice 'list'"
+			}
+
+		} else {
+			ret = "debe de enviar un valor numérico"
+		}
+
 	}
+	return ret
+}
 
-	fmt.Printf("%s \n", string(xmlString))
+func openXML(v *Configuracion) {
+	xmlFile, _ := os.Open(ConfigurationFileName)
+	xmlData, _ := ioutil.ReadAll(xmlFile)
 
-	// everything ok now, write to file.
-	filename := "newstaffs.xml"
-	file, _ := os.Create(filename)
+	xml.Unmarshal(xmlData, &v)
+	/*
+		fmt.Printf("Estructura: %#v\n", v)
 
+		xmlString, err := xml.MarshalIndent(v, "", "    ")
+
+		if err != nil {
+			fmt.Println(err)
+		}
+
+		fmt.Printf("%s \n", string(xmlString))
+	*/
+}
+
+func writeXML(v *Configuracion) {
+	/*
+		xmlString, err := xml.MarshalIndent(v, "", "    ")
+
+		if err != nil {
+			fmt.Println(err)
+		}
+
+		fmt.Printf("%s \n", string(xmlString))
+	*/
+
+	file, _ := os.Create(ConfigurationFileName)
 	xmlWriter := io.Writer(file)
 
 	enc := xml.NewEncoder(xmlWriter)
 	enc.Indent("  ", "    ")
+
 	if err := enc.Encode(v); err != nil {
 		fmt.Printf("error: %v\n", err)
 	}
 
+	file.Close()
+
 }
 
-// https://www.socketloop.com/tutorials/golang-create-new-xml-file
+func listServers() string {
+	v := Configuracion{}
+	//Lee el archivo de configuración
+	openXML(&v)
+	lista := ""
+
+	for index, servidor := range v.Servidores {
+		lista = lista + fmt.Sprintf("[%d] %s \n", index, servidor.String())
+	}
+
+	return string(lista)
+}
