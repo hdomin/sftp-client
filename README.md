@@ -32,5 +32,5 @@ Un plug-in adicional es que si falla en alguna conexión, se envíe un email a l
 
 ### delete ###
     Delete a server sftp configuration
-    --all
     --server <number>
+ 
