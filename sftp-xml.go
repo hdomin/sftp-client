@@ -46,7 +46,7 @@ func (srv *Servidor) setParams(params []string) {
 			case "--user":
 				srv.User = params[index+1]
 			case "--pass":
-				srv.Pass = params[index+1]
+				srv.Pass = encrypt([]byte(keyEncrypt), params[index+1])
 			case "--srcfile":
 				srv.SrcFile = params[index+1]
 			case "--dstpath":

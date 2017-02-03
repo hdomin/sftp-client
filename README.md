@@ -32,5 +32,10 @@ Un plug-in adicional es que si falla en alguna conexión, se envíe un email a l
 
 ### delete ###
     Delete a server sftp configuration
-    --server <number>
+    <number>
+
+### run ###
+    Execute the conection to sftp server and download the file for each server as configurated
+    --all       Excecute all the configurations
+    <number>    Excecute a specific server configuration
  
