@@ -30,7 +30,8 @@ func (s *Configuracion) AddServidor(srv *Servidor) {
 }
 
 func (srv *Servidor) String() string {
-	return fmt.Sprintf("Servidor: %s   \t- Usuario: %s   \t- Origen: %s   \t- Destino: %s", srv.Server, srv.User, srv.SrcFile, srv.DstPath)
+	//return fmt.Sprintf("Servidor: %s   \t- Usuario: %s   \t- Origen: %s   \t- Destino: %s \t-Pass: %s", srv.Server, srv.User, srv.SrcFile, srv.DstPath, decrypt([]byte(keyEncrypt), srv.Pass))
+	return fmt.Sprintf("Servidor: %s   \t- Usuario: %s   \t- Origen: %s   \t- Destino: %s ", srv.Server, srv.User, srv.SrcFile, srv.DstPath)
 }
 
 func (srv *Servidor) setParams(params []string) {

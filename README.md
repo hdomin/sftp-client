@@ -30,9 +30,17 @@ Un plug-in adicional es que si falla en alguna conexión, se envíe un email a l
 ### list ###
     List the servers sftp configurated
 
+    Example:
+
+        sftp-client list
+
 ### delete ###
     Delete a server sftp configuration
     <number>
+
+    Example:
+
+        sftp-client delete 0
 
 ### run ###
     Execute the conection to sftp server and download the file for each server as configurated
