@@ -1,5 +1,5 @@
 # sftp-client
-golang sftp client, connect to multiple servers sftp and download a specific file
+golang sftp client, connects to multiple servers sftp and downloads a specific file
 
 
 La idea de este proyecto es crear un cliente SFTP para que pueda conectarse a un servidor específico y descargar un archivo específico.
