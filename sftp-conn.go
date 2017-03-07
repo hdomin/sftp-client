@@ -97,3 +97,11 @@ func runServer(params []string) string {
 
 	return "Proceso terminado...."
 }
+
+func showVersion() string {
+	return "Versión de prueba para PEPSICO"
+}
+
+func showExpiredTrial() string {
+	return "Por favor comunicarse con hector@globalsiag.com para validar la versión de prueba"
+}

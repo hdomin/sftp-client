@@ -47,3 +47,6 @@ Un plug-in adicional es que si falla en alguna conexión, se envíe un email a l
     --all       Excecute all the configurations
     <number>    Excecute a specific server configuration
  
+
+### --version ###
+    Show the current version
