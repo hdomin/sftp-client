@@ -53,9 +53,11 @@ func (s *Servidor) run() (string, error) {
 	defer srcFile.Close()
 
 	t := time.Now()
-	ext := filepath.Ext(s.DstPath)
+	//ext := filepath.Ext(s.DstPath)
+	ext := filepath.Ext(s.SrcFile)
 	filenameDest := fmt.Sprintf("-%d-%02d-%02d-%02d-%02d-%02d%s", t.Year(), t.Month(), t.Day(), t.Hour(), t.Minute(), t.Second(), ext)
-	filenameDest = fmt.Sprintf("%s%s", s.DstPath[:len(s.DstPath)-len(ext)], filenameDest)
+	//filenameDest = fmt.Sprintf("%s%s", s.DstPath[:len(s.DstPath)-len(ext)], filenameDest)
+	filenameDest = fmt.Sprintf("%s%s%s", s.DstPath, s.SrcFile[:len(s.SrcFile)-len(ext)], filenameDest)
 
 	dstFile, err := os.Create(filenameDest)
 	if err != nil {
